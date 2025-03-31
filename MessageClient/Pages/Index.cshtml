@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center ">
+    <h1 class="display-4">Welcome</h1>
+    <p class="fs-4">Here you can write a message.</a></p>
+    <textarea id="textInput" class="bg-gradient rounded-pill w-50 border-dark shadow m-5 p-4 text-break" type="text" placeholder="Write here..." maxlength="128"></textarea>
+    <div class="d-flex gap-5 justify-content-center m-3 fs-6">
+        <button id="btnClear" type="button" class="nav-link text-dark rounded-pill">Clear</button>
+        <button id="btnSend" type="button" class="nav-link text-success rounded-pill">Send</button>
+    </div>
+</div>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
