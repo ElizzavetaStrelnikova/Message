@@ -5,6 +5,49 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Here you can see the list of your messages.</p>
+<div class="text-center d-flex flex-md-column align-items-sm-center">
+    <h1 class="display-4 mb-md-4">Messages</h1>
+    <div id="message-list" class="d-flex border w-50 rounded-3 flex-md-column">
+        
+    </div>
+</div>
 
-<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    var messageList = document.getElementById('message-list');
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const response = await fetch('https://localhost:44373/api/messages');
+            if (!response.ok) {
+                throw new Error('Ошибка загрузки сообщений');
+            }
+
+            const messages = await response.json();
+            displayMessages(messages);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Не удалось загрузить сообщения');
+        }
+    });
+
+    function displayMessages(messages) {
+
+        if (messages.length === 0) {
+            messageList.innerHTML = '<div class="d-flex">Нет сообщений</div>';
+            return;
+        }
+
+        messageList.innerHTML = messages.map(message => `
+            <div class="d-flex">
+                <div class="d-flex">${message.content}</div>
+                <div class="d-flex">${new Date(message.createdAt).toLocaleString()}</div>
+            </div>
+        `).join('');
+    }
+
+    setInterval(async () => {
+        const response = await fetch('/api/messages');
+        const messages = await response.json();
+        displayMessages(messages);
+    }, 5000);
+</script>

@@ -22,4 +22,12 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+app.MapControllers();
+
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"Received request: {context.Request.Method} {context.Request.Path}");
+    await next();
+});
+
 app.Run();
